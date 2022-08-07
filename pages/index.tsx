@@ -1,27 +1,22 @@
 import * as React from "react";
 import type { NextPage } from "next";
 import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Link from "../src/Link";
+import Header from "../components/header/Header";
+import NavbarActivity from "../components/activity/NavbarActivity";
+import EmptyActivity from "../components/activity/EmptyActivity";
+import ListActivity from "../components/activity/ListActivity";
 
 const Home: NextPage = () => {
   return (
-    <Container maxWidth="lg">
-      <Box
-        sx={{
-          my: 4,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Typography variant="h4" component="h1" gutterBottom>
-          Hello World
-        </Typography>
-      </Box>
-    </Container>
+    <Box bgcolor={"#F4F4F4"} minHeight="100vh">
+      <Header />
+      <Container>
+        <NavbarActivity />
+        <ListActivity />
+        {/* <EmptyActivity /> */}
+      </Container>
+    </Box>
   );
 };
 
