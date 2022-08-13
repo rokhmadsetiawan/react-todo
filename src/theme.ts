@@ -1,5 +1,11 @@
 import { createTheme } from "@mui/material/styles";
-import { red } from "@mui/material/colors";
+
+// custom module variant overide
+declare module "@mui/material/Toolbar" {
+  interface ToolbarPropsVariantOverrides {
+    large: true;
+  }
+}
 
 // Create a theme instance.
 const theme = createTheme({
@@ -8,13 +14,55 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      main: "#16ABF8",
+      main: "#16abf8",
     },
     secondary: {
       main: "#19857b",
     },
     error: {
-      main: red.A400,
+      main: "#ed4c5c",
+    },
+  },
+  components: {
+    // custom material button
+    MuiButton: {
+      variants: [
+        {
+          props: { variant: "contained", color: "primary" },
+          style: {
+            textTransform: "none",
+            borderRadius: 9999,
+            fontWeight: 600,
+            fontSize: "18px",
+            padding: "13.5px 29px",
+            minWidth: "150px",
+            color: "white",
+          },
+        },
+        {
+          props: { variant: "contained" },
+          style: {
+            textTransform: "none",
+            borderRadius: 9999,
+            fontWeight: 600,
+            fontSize: "18px",
+            padding: "13.5px 29px",
+            minWidth: "150px",
+          },
+        },
+      ],
+    },
+
+    // custom toolbar
+    MuiToolbar: {
+      variants: [
+        {
+          props: { variant: "large" },
+          style: {
+            minHeight: "105px",
+          },
+        },
+      ],
     },
   },
 });
