@@ -32,11 +32,8 @@ export const createActivityGroup = async () => {
   });
 };
 
-export const updateActivityGroup = async (
-  id: string,
-  activityGroup: ActivityGroup
-) => {
-  return await request.patch(`activity-groups/${id}`, activityGroup);
+export const updateActivityGroup = async ({ id, title }: ActivityGroup) => {
+  return await request.patch(`activity-groups/${id}`, { title: title });
 };
 
 export const deleteActivityGroup = async (id: string) => {
@@ -44,7 +41,9 @@ export const deleteActivityGroup = async (id: string) => {
 };
 
 // TODO ITEMS API
-export const getTodoItems = async (activityGroupId: string) => {
+export const getTodoItems = async (
+  activityGroupId: string | string[] | undefined
+) => {
   const { data } = await request.get("todo-items", {
     params: {
       activity_group_id: activityGroupId,

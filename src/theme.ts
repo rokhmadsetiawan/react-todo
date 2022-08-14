@@ -64,6 +64,19 @@ const theme = createTheme({
         },
       ],
     },
+
+    MuiIconButton: {
+      variants: [
+        {
+          props: { size: "large" },
+          style: {
+            width: "54px",
+            height: "54px",
+            border: "1px solid #e5e5e5",
+          },
+        },
+      ],
+    },
   },
 });
 

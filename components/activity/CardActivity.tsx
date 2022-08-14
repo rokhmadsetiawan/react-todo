@@ -8,6 +8,7 @@ import StyledConfirmationDialog from "../Styled/StyledConfirmationDialog";
 import { useMutation, useQueryClient } from "react-query";
 import { deleteActivityGroup } from "../../request/api";
 import Link from "next/link";
+import Image from "next/image";
 
 type Props = {
   activityGroup: ActivityGroup;
@@ -67,7 +68,12 @@ const CardActivity = ({ activityGroup }: Props) => {
             color="default"
             onClick={handleClickOpen}
           >
-            <DeleteOutlineIcon />
+            <Image
+              src={"/icon-delete.svg"}
+              width={18}
+              height={18}
+              alt="Delete"
+            />
           </IconButton>
         </CardActions>
       </StyledCard>
