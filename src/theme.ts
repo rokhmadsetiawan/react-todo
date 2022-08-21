@@ -30,12 +30,6 @@ const theme = createTheme({
         {
           props: { variant: "contained", color: "primary" },
           style: {
-            textTransform: "none",
-            borderRadius: 9999,
-            fontWeight: 600,
-            fontSize: "18px",
-            padding: "13.5px 29px",
-            minWidth: "150px",
             color: "white",
           },
         },

@@ -19,6 +19,7 @@ import {
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import Image from "next/image";
 import Link from "next/link";
+import StyledItemFormDialog from "../Styled/StyledItemFormDialog";
 
 type Props = {
   activityGroup: ActivityGroup;
@@ -70,6 +71,7 @@ const EditableTextField = ({
 const NavbarActivityDetail = ({ activityGroup }: Props) => {
   const [isTextField, setTextField] = useState(false);
   const [title, setTitle] = useState("");
+  const [open, setOpen] = useState(false);
 
   const queryClient = useQueryClient();
   const updateActivityGroupMutation = useMutation(updateActivityGroup, {
@@ -89,43 +91,61 @@ const NavbarActivityDetail = ({ activityGroup }: Props) => {
     setTitle(activityGroup?.title);
   }, [activityGroup]);
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <Stack direction={"row"} justifyContent={"space-between"} paddingY={5}>
-      <Stack direction="row" alignItems="center" gap={"20px"}>
-        <Link href="/">
-          <ButtonBase aria-label="back" disableRipple disableTouchRipple>
-            <Image src={"/icon-back.svg"} width={32} height={32} alt="Back" />
+    <>
+      <Stack direction={"row"} justifyContent={"space-between"} paddingY={5}>
+        <Stack direction="row" alignItems="center" gap={"20px"}>
+          <Link href="/">
+            <ButtonBase aria-label="back" disableRipple disableTouchRipple>
+              <Image src={"/icon-back.svg"} width={32} height={32} alt="Back" />
+            </ButtonBase>
+          </Link>
+          <EditableTextField
+            newText={title}
+            setNewText={setTitle}
+            isTextField={isTextField}
+            handleClickAway={handleClickAway}
+          />
+          <ButtonBase
+            aria-label="edit"
+            disableRipple
+            disableTouchRipple
+            onClick={(e) => setTextField(!isTextField)}
+          >
+            <Image src={"/icon-edit.svg"} width={32} height={32} alt="Back" />
           </ButtonBase>
-        </Link>
-        <EditableTextField
-          newText={title}
-          setNewText={setTitle}
-          isTextField={isTextField}
-          handleClickAway={handleClickAway}
-        />
-        <ButtonBase
-          aria-label="edit"
-          disableRipple
-          disableTouchRipple
-          onClick={(e) => setTextField(!isTextField)}
-        >
-          <Image src={"/icon-edit.svg"} width={32} height={32} alt="Back" />
-        </ButtonBase>
+        </Stack>
+        <Stack direction={"row"} spacing="18px" alignItems={"center"}>
+          <IconButton size="large">
+            <Image src={"/icon-sort.svg"} width={24} height={24} alt="Sort" />
+          </IconButton>
+          <Button
+            variant="contained"
+            color="primary"
+            disableElevation
+            startIcon={<AddIcon />}
+            onClick={handleClickOpen}
+          >
+            Tambah
+          </Button>
+        </Stack>
       </Stack>
-      <Stack direction={"row"} spacing="18px" alignItems={"center"}>
-        <IconButton size="large">
-          <Image src={"/icon-sort.svg"} width={24} height={24} alt="Sort" />
-        </IconButton>
-        <Button
-          variant="contained"
-          color="primary"
-          disableElevation
-          startIcon={<AddIcon />}
-        >
-          Tambah
-        </Button>
-      </Stack>
-    </Stack>
+
+      {/* dialog */}
+      <StyledItemFormDialog
+        open={open}
+        handleClose={handleClose}
+        isEdit={false}
+      />
+    </>
   );
 };
 

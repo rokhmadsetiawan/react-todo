@@ -12,6 +12,11 @@ import React, { useState } from "react";
 import StyledConfirmationDialog from "../Styled/StyledConfirmationDialog";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EmptyTodoList from "./EmptyTodoList";
+import { PRIORITIES } from "../../constants";
+import { useMutation, useQueryClient } from "react-query";
+import { deleteTodoItem, updateTodoItem } from "../../request/api";
+import { useRouter } from "next/router";
+import StyledItemFormDialog from "../Styled/StyledItemFormDialog";
 
 type TodoItemsProps = {
   todoItems?: TodoItem[];
@@ -21,53 +26,67 @@ type TodoItemProps = {
   todoItem: TodoItem;
 };
 
-const priority = [
-  {
-    value: "very-high",
-    color: red[500],
-    label: "Very High",
-  },
-  {
-    value: "yellow",
-    color: orange[500],
-    label: "High",
-  },
-  { value: "medium", color: green[500], label: "Medium" },
-  {
-    value: "low",
-    color: blue[500],
-    label: "low",
-  },
-  {
-    value: "very-low",
-    color: purple[500],
-    label: "Very Low",
-  },
-];
-
 const generatePriorityColor = (priority: string) => {};
 
 const TodoItem = ({ todoItem }: TodoItemProps) => {
-  const [open, setOpen] = useState(false);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [openEditDialog, setOpenEditDialog] = useState(false);
+
+  const queryClient = useQueryClient();
+  const router = useRouter();
+  const { group_id } = router.query;
+
+  const deleteTodoItemMutation = useMutation(deleteTodoItem, {
+    onSuccess: () => {
+      queryClient.invalidateQueries([
+        "activity-groups",
+        group_id,
+        "todo-items",
+      ]);
+
+      setOpenDeleteDialog(false);
+    },
+  });
+
+  const updateTodoItemMutation = useMutation(updateTodoItem, {
+    onSuccess: () => {
+      queryClient.invalidateQueries([
+        "activity-groups",
+        group_id,
+        "todo-items",
+      ]);
+    },
+  });
 
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
   const handleClickOpen = () => {
-    setOpen(true);
+    setOpenDeleteDialog(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleCloseDeleteDialog = () => {
+    setOpenDeleteDialog(false);
   };
 
-  const handleNo = () => {
-    setOpen(false);
+  const handleCloseEditDialog = () => {
+    setOpenEditDialog(false);
   };
 
-  const handleYes = (id: string | undefined) => {
+  const handleYes = ({ id }: TodoItem) => {
     if (id) {
-      setOpen(false);
+      deleteTodoItemMutation.mutate(id);
     }
+  };
+
+  const onChange = (todoItem: TodoItem) => {
+    updateTodoItemMutation.mutate({
+      ...todoItem,
+      is_active: todoItem.is_active == 1 ? 0 : 1,
+    });
+  };
+
+  const handleEdit = () => {
+    setOpenEditDialog(true);
   };
 
   return (
@@ -85,10 +104,14 @@ const TodoItem = ({ todoItem }: TodoItemProps) => {
         }}
       >
         <Stack direction={"row"} alignItems="center" spacing={"16px"}>
-          <Checkbox {...label} checked={todoItem.is_active == 1} />
+          <Checkbox
+            {...label}
+            checked={todoItem.is_active == 1}
+            onChange={() => onChange(todoItem)}
+          />
           <Box
             sx={{
-              background: priority.find((p) => p.value === todoItem.priority)
+              background: PRIORITIES.find((p) => p.value === todoItem.priority)
                 ?.color,
               width: "14px",
               height: "14px",
@@ -101,6 +124,7 @@ const TodoItem = ({ todoItem }: TodoItemProps) => {
             component={"p"}
             fontSize="18px"
             fontWeight={600}
+            className={todoItem.is_active == 1 ? "todo-done" : "null"}
           >
             {todoItem?.title}
           </Typography>
@@ -108,7 +132,7 @@ const TodoItem = ({ todoItem }: TodoItemProps) => {
             aria-label="edit"
             disableRipple
             disableTouchRipple
-            onClick={(e) => console.log("edit")}
+            onClick={handleEdit}
           >
             <Image src={"/icon-edit.svg"} width={20} height={20} alt="Edit" />
           </ButtonBase>
@@ -123,10 +147,10 @@ const TodoItem = ({ todoItem }: TodoItemProps) => {
         </IconButton>
       </Stack>
       <StyledConfirmationDialog
-        handleClose={handleClose}
-        handleNo={handleClose}
-        handleYes={() => handleYes(1)}
-        open={open}
+        handleClose={handleCloseDeleteDialog}
+        handleNo={handleCloseDeleteDialog}
+        handleYes={() => handleYes(todoItem)}
+        open={openDeleteDialog}
         title={
           <Typography
             variant="body1"
@@ -138,12 +162,18 @@ const TodoItem = ({ todoItem }: TodoItemProps) => {
           </Typography>
         }
       />
+
+      <StyledItemFormDialog
+        open={openEditDialog}
+        handleClose={handleCloseEditDialog}
+        isEdit={true}
+        todoItem={todoItem}
+      />
     </Box>
   );
 };
 
 const TodoItems = ({ todoItems }: TodoItemsProps) => {
-  console.log("todoItems", todoItems);
   if (todoItems?.length === 0) {
     return <EmptyTodoList />;
   }

@@ -58,14 +58,20 @@ export const getTodoItemsDetail = async (id: string) => {
 };
 
 export const createTodoItem = async (todoItem: TodoItem) => {
-  return await request.post("todo-items", todoItem);
+  console.log("todoItem :>> ", todoItem);
+  return await request.post("todo-items", { ...todoItem, is_active: 0 });
 };
 
-export const updateTodoItem = async (id: string, todoItem: TodoItem) => {
-  return await request.patch(`todo-items/${id}`, todoItem);
+export const updateTodoItem = async (todoItem: TodoItem) => {
+  const { id, is_active, priority, title } = todoItem;
+  return await request.patch(`todo-items/${id}`, {
+    is_active,
+    priority,
+    title,
+  });
 };
 
-export const deleteTodoItem = async (id: string) => {
+export const deleteTodoItem = async (id: number) => {
   return await request.delete(`todo-items/${id}`);
 };
 
