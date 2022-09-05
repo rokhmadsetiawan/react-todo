@@ -75,7 +75,7 @@ export const updateTodoItem = async (todoItem: TodoItem) => {
   });
 };
 
-export const deleteTodoItem = async (id: number) => {
+export const deleteTodoItem = async (id: string) => {
   return await request.delete(`todo-items/${id}`);
 };
 

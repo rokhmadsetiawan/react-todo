@@ -123,8 +123,8 @@ const StyledItemFormDialog = ({
   });
 
   const onSubmit: SubmitHandler<TodoItem> = (data: TodoItem) => {
-    if (isEdit) {
-      updateItemMutation.mutate({ ...data, id: todoItem?.id });
+    if (isEdit && todoItem) {
+      updateItemMutation.mutate({ ...data, id: todoItem.id });
     } else {
       addItemMutation.mutate(data);
     }

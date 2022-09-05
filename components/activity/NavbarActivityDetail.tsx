@@ -74,11 +74,9 @@ const NavbarActivityDetail = ({
   const [isTextField, setTextField] = useState(false);
   const [title, setTitle] = useState("");
   const [open, setOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const openSort = Boolean(anchorEl);
-  const handleClickSortButton = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+
   const handleClickSort = (sort: string) => {
     setAnchorEl(null);
     setOrderBy(sort);
@@ -140,7 +138,7 @@ const NavbarActivityDetail = ({
             aria-controls={openSort ? "basic-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={openSort ? "true" : undefined}
-            onClick={handleClickSortButton}
+            onClick={(e) => setAnchorEl(e.currentTarget)}
           >
             <Image src={"/icon-sort.svg"} width={24} height={24} alt="Sort" />
           </IconButton>
