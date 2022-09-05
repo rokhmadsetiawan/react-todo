@@ -126,7 +126,7 @@ const TodoItem = ({ todoItem }: TodoItemProps) => {
             fontWeight={600}
             className={todoItem.is_active == 1 ? "todo-done" : "null"}
           >
-            {todoItem?.title} {todoItem?.id}
+            {todoItem?.title}
           </Typography>
           <ButtonBase
             aria-label="edit"
