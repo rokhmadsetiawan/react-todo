@@ -36,7 +36,6 @@ export default function MyApp(props: MyAppProps) {
             <Component {...pageProps} />
           </ThemeProvider>
         </CacheProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
       </Hydrate>
     </QueryClientProvider>
   );

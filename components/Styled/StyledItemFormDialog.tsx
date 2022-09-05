@@ -83,22 +83,19 @@ const StyledItemFormDialog = ({
   const router = useRouter();
   const { group_id } = router.query;
 
-  const defaultValues = isEdit
-    ? todoItem
-    : {
-        activity_group_id: group_id,
-        title: "",
-        priority: "very-high",
-      };
-
   const {
     control,
     handleSubmit,
     formState: { isSubmitting, isValid },
     reset,
+    setValue,
   } = useForm<TodoItem>({
     mode: "onChange",
-    defaultValues,
+    defaultValues: {
+      activity_group_id: group_id,
+      title: "",
+      priority: "very-high",
+    },
   });
 
   const addItemMutation = useMutation(createTodoItem, {
@@ -127,7 +124,7 @@ const StyledItemFormDialog = ({
 
   const onSubmit: SubmitHandler<TodoItem> = (data: TodoItem) => {
     if (isEdit) {
-      updateItemMutation.mutate(data);
+      updateItemMutation.mutate({ ...data, id: todoItem?.id });
     } else {
       addItemMutation.mutate(data);
     }
@@ -143,6 +140,13 @@ const StyledItemFormDialog = ({
       },
     },
   };
+
+  React.useEffect(() => {
+    if (isEdit && todoItem) {
+      setValue("title", todoItem?.title);
+      setValue("priority", todoItem?.priority);
+    }
+  }, [todoItem]);
 
   return (
     <BootstrapDialog

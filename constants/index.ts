@@ -7,7 +7,7 @@ export const PRIORITIES = [
     label: "Very High",
   },
   {
-    value: "yellow",
+    value: "high",
     color: orange[500],
     label: "High",
   },

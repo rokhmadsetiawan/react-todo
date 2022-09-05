@@ -7,7 +7,7 @@ type ActivityGroup = {
 
 type TodoItem = {
   activity_group_id?: string | string[] | undefined;
-  id: number;
+  id: string;
   title: string;
   is_active?: number;
   priority?: string;
