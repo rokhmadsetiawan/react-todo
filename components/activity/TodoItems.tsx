@@ -146,29 +146,35 @@ const TodoItem = ({ todoItem }: TodoItemProps) => {
           <Image src={"/icon-delete.svg"} width={18} height={18} alt="Delete" />
         </IconButton>
       </Stack>
-      <StyledConfirmationDialog
-        handleClose={handleCloseDeleteDialog}
-        handleNo={handleCloseDeleteDialog}
-        handleYes={() => handleYes(todoItem)}
-        open={openDeleteDialog}
-        title={
-          <Typography
-            variant="body1"
-            component={"p"}
-            fontSize="18px"
-            textAlign="center"
-          >
-            Apakah anda yakin menghapus item <strong> {todoItem?.title}</strong>
-          </Typography>
-        }
-      />
 
-      <StyledItemFormDialog
-        open={openEditDialog}
-        handleClose={handleCloseEditDialog}
-        isEdit={true}
-        todoItem={todoItem}
-      />
+      {openDeleteDialog && (
+        <StyledConfirmationDialog
+          handleClose={handleCloseDeleteDialog}
+          handleNo={handleCloseDeleteDialog}
+          handleYes={() => handleYes(todoItem)}
+          open={openDeleteDialog}
+          title={
+            <Typography
+              variant="body1"
+              component={"p"}
+              fontSize="18px"
+              textAlign="center"
+            >
+              Apakah anda yakin menghapus item{" "}
+              <strong> {todoItem?.title}</strong>
+            </Typography>
+          }
+        />
+      )}
+
+      {openEditDialog && (
+        <StyledItemFormDialog
+          open={openEditDialog}
+          handleClose={handleCloseEditDialog}
+          isEdit={true}
+          todoItem={todoItem}
+        />
+      )}
     </Box>
   );
 };

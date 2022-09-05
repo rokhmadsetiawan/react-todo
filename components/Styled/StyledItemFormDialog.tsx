@@ -146,7 +146,7 @@ const StyledItemFormDialog = ({
       setValue("title", todoItem?.title);
       setValue("priority", todoItem?.priority);
     }
-  }, [todoItem]);
+  }, []);
 
   return (
     <BootstrapDialog
