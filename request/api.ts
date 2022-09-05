@@ -21,8 +21,12 @@ export const getActivityGroups = async () => {
 export const getActivityGroupDetail = async (
   id: string | string[] | undefined
 ) => {
-  const { data } = await request.get(`activity-groups/${id}`);
-  return data;
+  if (id) {
+    const { data } = await request.get(`activity-groups/${id}`);
+    return data;
+  } else {
+    return [];
+  }
 };
 
 export const createActivityGroup = async () => {

@@ -1,28 +1,26 @@
 import {
-  Box,
   Button,
   ButtonBase,
   ClickAwayListener,
   IconButton,
+  Menu,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import {
-  createActivityGroup,
-  deleteActivityGroup,
-  updateActivityGroup,
-} from "../../request/api";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { getActivityGroupDetail, updateActivityGroup } from "../../request/api";
 import Image from "next/image";
 import Link from "next/link";
 import StyledItemFormDialog from "../Styled/StyledItemFormDialog";
+import StyledSortMenuItem from "../Styled/StyledSortMenuItem";
 
 type Props = {
   activityGroup: ActivityGroup;
+  orderBy: string;
+  setOrderBy: (orderBy: string) => void;
 };
 
 type EditableTextField = {
@@ -68,10 +66,23 @@ const EditableTextField = ({
   );
 };
 
-const NavbarActivityDetail = ({ activityGroup }: Props) => {
+const NavbarActivityDetail = ({
+  activityGroup,
+  orderBy,
+  setOrderBy,
+}: Props) => {
   const [isTextField, setTextField] = useState(false);
   const [title, setTitle] = useState("");
   const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const openSort = Boolean(anchorEl);
+  const handleClickSortButton = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClickSort = (sort: string) => {
+    setAnchorEl(null);
+    setOrderBy(sort);
+  };
 
   const queryClient = useQueryClient();
   const updateActivityGroupMutation = useMutation(updateActivityGroup, {
@@ -124,7 +135,13 @@ const NavbarActivityDetail = ({ activityGroup }: Props) => {
           </ButtonBase>
         </Stack>
         <Stack direction={"row"} spacing="18px" alignItems={"center"}>
-          <IconButton size="large">
+          <IconButton
+            size="large"
+            aria-controls={openSort ? "basic-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={openSort ? "true" : undefined}
+            onClick={handleClickSortButton}
+          >
             <Image src={"/icon-sort.svg"} width={24} height={24} alt="Sort" />
           </IconButton>
           <Button
@@ -145,6 +162,57 @@ const NavbarActivityDetail = ({ activityGroup }: Props) => {
         handleClose={handleClose}
         isEdit={false}
       />
+
+      {/* Menu */}
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={openSort}
+        onClose={handleClickSort}
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
+        }}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+        sx={{ marginTop: "16px" }}
+      >
+        <StyledSortMenuItem
+          handleClick={() => handleClickSort("newest")}
+          title="Terbaru"
+          image="/icon-sort-newest.svg"
+          checked={orderBy === "newest"}
+        />
+        <StyledSortMenuItem
+          handleClick={() => handleClickSort("oldest")}
+          title="Terlama"
+          image="/icon-sort-oldest.svg"
+          checked={orderBy === "oldest"}
+        />
+        <StyledSortMenuItem
+          handleClick={() => handleClickSort("ascending")}
+          title="A-Z"
+          image="/icon-sort-a.svg"
+          checked={orderBy === "ascending"}
+        />
+        <StyledSortMenuItem
+          handleClick={() => handleClickSort("descending")}
+          title="Z-A"
+          image="/icon-sort-d.svg"
+          checked={orderBy === "descending"}
+        />
+        <StyledSortMenuItem
+          handleClick={() => handleClickSort("active")}
+          title="Belum Selesai"
+          image="/icon-sort-active.svg"
+          checked={orderBy === "active"}
+        />
+      </Menu>
     </>
   );
 };
