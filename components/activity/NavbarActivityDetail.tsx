@@ -60,7 +60,12 @@ const EditableTextField = ({
   }
 
   return (
-    <Typography variant="h4" fontWeight={700} component={"h1"}>
+    <Typography
+      variant="h4"
+      fontWeight={700}
+      component={"h1"}
+      data-cy="todo-title"
+    >
       {newText}
     </Typography>
   );
@@ -113,7 +118,12 @@ const NavbarActivityDetail = ({
       <Stack direction={"row"} justifyContent={"space-between"} paddingY={5}>
         <Stack direction="row" alignItems="center" gap={"20px"}>
           <Link href="/">
-            <ButtonBase aria-label="back" disableRipple disableTouchRipple>
+            <ButtonBase
+              aria-label="back"
+              disableRipple
+              disableTouchRipple
+              data-cy="todo-back-button"
+            >
               <Image src={"/icon-back.svg"} width={32} height={32} alt="Back" />
             </ButtonBase>
           </Link>
@@ -128,6 +138,7 @@ const NavbarActivityDetail = ({
             disableRipple
             disableTouchRipple
             onClick={(e) => setTextField(!isTextField)}
+            data-cy="todo-title-edit-button"
           >
             <Image src={"/icon-edit.svg"} width={32} height={32} alt="Back" />
           </ButtonBase>
@@ -139,6 +150,7 @@ const NavbarActivityDetail = ({
             aria-haspopup="true"
             aria-expanded={openSort ? "true" : undefined}
             onClick={(e) => setAnchorEl(e.currentTarget)}
+            data-cy="todo-sort-button"
           >
             <Image src={"/icon-sort.svg"} width={24} height={24} alt="Sort" />
           </IconButton>
@@ -148,6 +160,7 @@ const NavbarActivityDetail = ({
             disableElevation
             startIcon={<AddIcon />}
             onClick={handleClickOpen}
+            data-cy="todo-add-button"
           >
             Tambah
           </Button>
@@ -185,30 +198,35 @@ const NavbarActivityDetail = ({
           title="Terbaru"
           image="/icon-sort-newest.svg"
           checked={orderBy === "newest"}
+          data-cy="sort-selection"
         />
         <StyledSortMenuItem
           handleClick={() => handleClickSort("oldest")}
           title="Terlama"
           image="/icon-sort-oldest.svg"
           checked={orderBy === "oldest"}
+          data-cy="sort-selection"
         />
         <StyledSortMenuItem
           handleClick={() => handleClickSort("ascending")}
           title="A-Z"
           image="/icon-sort-a.svg"
           checked={orderBy === "ascending"}
+          data-cy="sort-selection"
         />
         <StyledSortMenuItem
           handleClick={() => handleClickSort("descending")}
           title="Z-A"
           image="/icon-sort-d.svg"
           checked={orderBy === "descending"}
+          data-cy="sort-selection"
         />
         <StyledSortMenuItem
           handleClick={() => handleClickSort("active")}
           title="Belum Selesai"
           image="/icon-sort-active.svg"
           checked={orderBy === "active"}
+          data-cy="sort-selection"
         />
       </Menu>
     </>

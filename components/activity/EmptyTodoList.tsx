@@ -12,7 +12,12 @@ const EmptyTodoList = (_props: Props) => {
   };
 
   return (
-    <Stack alignItems={"center"} justifyContent="center" py={5}>
+    <Stack
+      alignItems={"center"}
+      justifyContent="center"
+      py={5}
+      data-cy="todo-empty-state"
+    >
       <ButtonBase onClick={onClick} disableRipple disableTouchRipple>
         <Box sx={{ position: "relative", width: 541, height: 413 }}>
           <Image src={"/empty-item.png"} layout="fill" alt="List empty" />

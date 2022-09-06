@@ -21,8 +21,14 @@ const StyledSortMenuItem = ({ handleClick, image, title, checked }: Props) => {
         justifyContent="space-between"
         alignItems={"center"}
       >
-        <Image src={image} width={24} height={24} alt={title} />
-        <span>{title}</span>
+        <Image
+          src={image}
+          width={24}
+          height={24}
+          alt={title}
+          data-cy="sort-selection-icon"
+        />
+        <span data-cy="sort-selection-title">{title}</span>
         {checked && (
           <Box
             sx={{

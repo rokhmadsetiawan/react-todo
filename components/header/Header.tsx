@@ -18,13 +18,14 @@ const Header = ({ title }: Props) => {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static" sx={{ color: "white" }} elevation={0}>
           <Container>
-            <Toolbar disableGutters variant="large">
+            <Toolbar disableGutters variant="large" data-cy="header-background">
               <Link href="/">
                 <Typography
                   variant="h6"
-                  component="div"
+                  component="h2"
                   fontWeight={700}
                   sx={{ flexGrow: 1, cursor: "pointer" }}
+                  data-cy="header-title"
                 >
                   {title}
                 </Typography>

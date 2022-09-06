@@ -30,6 +30,7 @@ const NavbarActivity = (props: Props) => {
         disableElevation
         startIcon={<AddIcon />}
         onClick={onClick}
+        data-cy="activity-add-button"
       >
         Tambah
       </Button>

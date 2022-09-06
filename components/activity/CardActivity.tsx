@@ -45,7 +45,7 @@ const CardActivity = ({ activityGroup }: Props) => {
 
   return (
     <>
-      <StyledCard elevation={0}>
+      <StyledCard elevation={0} data-cy="activity-item">
         <StyledCardContent>
           <Link href={`detail/${activityGroup.id}`}>
             <Typography
@@ -54,6 +54,8 @@ const CardActivity = ({ activityGroup }: Props) => {
               color="text.primary"
               gutterBottom
               sx={{ cursor: "pointer" }}
+              component={"h4"}
+              data-cy="activity-item-title"
             >
               {activityGroup.title}
             </Typography>
@@ -67,6 +69,7 @@ const CardActivity = ({ activityGroup }: Props) => {
             aria-label="delete"
             color="default"
             onClick={handleClickOpen}
+            data-cy="activity-item-delete-button"
           >
             <Image
               src={"/icon-delete.svg"}
@@ -83,6 +86,7 @@ const CardActivity = ({ activityGroup }: Props) => {
         handleNo={handleClose}
         handleYes={() => handleYes(activityGroup.id)}
         open={open}
+        dataCy="activity-modal-delete"
         title={
           <Typography
             variant="body1"

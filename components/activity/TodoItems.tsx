@@ -90,7 +90,7 @@ const TodoItem = ({ todoItem }: TodoItemProps) => {
   };
 
   return (
-    <Box>
+    <Box data-cy="todo-item">
       <Stack
         direction="row"
         justifyContent="space-between"
@@ -108,6 +108,7 @@ const TodoItem = ({ todoItem }: TodoItemProps) => {
             {...label}
             checked={todoItem.is_active == 1}
             onChange={() => onChange(todoItem)}
+            data-cy="todo-item-checkbox"
           />
           <Box
             sx={{
@@ -117,6 +118,7 @@ const TodoItem = ({ todoItem }: TodoItemProps) => {
               height: "14px",
               borderRadius: "50%",
             }}
+            data-cy="todo-item-priority-indicator"
           />
 
           <Typography
@@ -125,6 +127,7 @@ const TodoItem = ({ todoItem }: TodoItemProps) => {
             fontSize="18px"
             fontWeight={600}
             className={todoItem.is_active == 1 ? "todo-done" : "null"}
+            data-cy="todo-item-title"
           >
             {todoItem?.title}
           </Typography>
@@ -133,6 +136,7 @@ const TodoItem = ({ todoItem }: TodoItemProps) => {
             disableRipple
             disableTouchRipple
             onClick={handleEdit}
+            data-cy="todo-item-edit-button"
           >
             <Image src={"/icon-edit.svg"} width={20} height={20} alt="Edit" />
           </ButtonBase>
@@ -142,6 +146,7 @@ const TodoItem = ({ todoItem }: TodoItemProps) => {
           aria-label="delete"
           color="default"
           onClick={handleClickOpen}
+          data-cy="todo-item-delete-button"
         >
           <Image src={"/icon-delete.svg"} width={18} height={18} alt="Delete" />
         </IconButton>
@@ -153,6 +158,7 @@ const TodoItem = ({ todoItem }: TodoItemProps) => {
           handleNo={handleCloseDeleteDialog}
           handleYes={() => handleYes(todoItem)}
           open={openDeleteDialog}
+          dataCy="todo-modal-delete"
           title={
             <Typography
               variant="body1"

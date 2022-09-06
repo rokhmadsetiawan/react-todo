@@ -162,7 +162,12 @@ const StyledItemFormDialog = ({
         </BootstrapDialogTitle>
         <DialogContent dividers>
           <Stack direction="column" marginBottom={"26px"} spacing={1}>
-            <Typography variant="caption" component="label" fontWeight={600}>
+            <Typography
+              variant="caption"
+              component="label"
+              fontWeight={600}
+              data-cy="modal-add-name-title"
+            >
               NAMA LIST ITEM
             </Typography>
             <Controller
@@ -174,6 +179,7 @@ const StyledItemFormDialog = ({
                   {...field}
                   variant="outlined"
                   placeholder="Tambahkan nama activity"
+                  data-cy="modal-add-name-input"
                 />
               )}
             />
@@ -191,6 +197,7 @@ const StyledItemFormDialog = ({
                   MenuProps={MenuProps}
                   fullWidth
                   IconComponent={KeyboardArrowUp}
+                  data-cy="modal-add-priority-dropdown"
                   {...field}
                 >
                   {PRIORITIES.map((priority) => (
@@ -225,6 +232,7 @@ const StyledItemFormDialog = ({
             variant="contained"
             disableElevation
             disabled={!isValid}
+            data-cy="modal-add-save-button"
           >
             {isSubmitting ? <CircularProgress /> : "Simpan"}
           </Button>
