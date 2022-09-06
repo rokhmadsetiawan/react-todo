@@ -55,14 +55,18 @@ const CardActivity = ({ activityGroup }: Props) => {
               gutterBottom
               sx={{ cursor: "pointer" }}
               component={"h4"}
-              data-cy="activity-item-title"
+              data-cy="activity-title"
             >
               {activityGroup.title}
             </Typography>
           </Link>
         </StyledCardContent>
         <CardActions sx={{ justifyContent: "space-between" }}>
-          <Typography variant="body2" component={"span"}>
+          <Typography
+            variant="body2"
+            component={"span"}
+            data-cy="activity-item-date"
+          >
             {moment(activityGroup.created_at).format("DD MMM YYYY")}
           </Typography>
           <IconButton
@@ -86,7 +90,7 @@ const CardActivity = ({ activityGroup }: Props) => {
         handleNo={handleClose}
         handleYes={() => handleYes(activityGroup.id)}
         open={open}
-        dataCy="activity-modal-delete"
+        dataCy="modal-delete"
         title={
           <Typography
             variant="body1"

@@ -31,7 +31,7 @@ const Home: NextPage = () => {
   } = useQuery("activity-groups", getActivityGroups);
 
   return (
-    <Layout title="TODO LIST APP">
+    <Layout title="TO DO LIST APP">
       <NavbarActivity />
       {isLoading && <StyledLoading />}
       {isSuccess && <ListActivity activityGroups={activityGroups} />}
