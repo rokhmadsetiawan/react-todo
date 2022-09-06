@@ -55,7 +55,7 @@ const CardActivity = ({ activityGroup }: Props) => {
               gutterBottom
               sx={{ cursor: "pointer" }}
               component={"h4"}
-              data-cy="activity-title"
+              data-cy="activity-item-title"
             >
               {activityGroup.title}
             </Typography>
